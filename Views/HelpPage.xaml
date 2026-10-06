@@ -5,71 +5,160 @@
              Title="How to Play">
 
     <ScrollView>
-        <VerticalStackLayout Padding="20" Spacing="15">
+        <VerticalStackLayout Padding="16" Spacing="14">
 
-            <Label Text="🎯 How to Play"
-                   FontSize="24"
-                   FontAttributes="Bold"
-                   TextColor="{AppThemeBinding Light=#16213E, Dark=#E94560}" />
+            <VerticalStackLayout Spacing="6">
+                <Label Text="🔐 Crack the code!" Style="{StaticResource PageTitle}" />
+                <Label Style="{StaticResource BodyText}"
+                       Text="Myst3ry has picked a secret three-digit number. All three digits are different and it never starts with 0. Find it in as few guesses as you can." />
+            </VerticalStackLayout>
 
-            <Label FontSize="15" LineHeight="1.4"
-                   TextColor="{AppThemeBinding Light=#333333, Dark=#EEEEEE}">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="The computer has secretly selected a random 3-digit code. Your job is to crack the myst3ry by making guesses." />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+            <!-- Step 1 -->
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="1 · Enter a guess" Style="{StaticResource CardTitle}" />
+                    <Label Style="{StaticResource BodyText}"
+                           Text="Tap three digits on the keypad. Digits you have already used are greyed out, because the code never repeats a digit." />
+                    <Label Style="{StaticResource BodyText}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="⌫ " FontAttributes="Bold" />
+                                <Span Text="deletes the last digit.  " />
+                                <Span Text="✓ " FontAttributes="Bold" />
+                                <Span Text="submits your guess." />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </VerticalStackLayout>
+            </Border>
 
-            <Label Text="How Feedback Works"
-                   FontSize="18"
-                   FontAttributes="Bold"
-                   TextColor="{AppThemeBinding Light=#16213E, Dark=#E94560}"
-                   Margin="0,10,0,0" />
+            <!-- Step 2 -->
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="2 · Read the clues" Style="{StaticResource CardTitle}" />
 
-            <Label FontSize="15" LineHeight="1.4"
-                   TextColor="{AppThemeBinding Light=#333333, Dark=#EEEEEE}">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="✅ Hits: " FontAttributes="Bold" />
-                        <Span Text="Number of digits in the correct position." />
-                        <Span Text="&#10;&#10;" />
-                        <Span Text="🔄 Matches: " FontAttributes="Bold" />
-                        <Span Text="Number of correct digits in the wrong position." />
-                        <Span Text="&#10;&#10;" />
-                        <Span Text="Example: " FontAttributes="Bold" />
-                        <Span Text="If the myst3ry code is 5-8-6 and you guess 8-5-6, you get 1 hit and 2 matches." />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Border Style="{StaticResource HitPill}">
+                            <Label Text="hit" Style="{StaticResource HitPillLabel}" />
+                        </Border>
+                        <Label Grid.Column="1" Style="{StaticResource BodyText}" VerticalOptions="Center"
+                               Text="A correct digit in the correct place." />
+                    </Grid>
 
-            <Label Text="Difficulty Modes"
-                   FontSize="18"
-                   FontAttributes="Bold"
-                   TextColor="{AppThemeBinding Light=#16213E, Dark=#E94560}"
-                   Margin="0,10,0,0" />
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="10">
+                        <Border Style="{StaticResource MatchPill}">
+                            <Label Text="match" Style="{StaticResource MatchPillLabel}" />
+                        </Border>
+                        <Label Grid.Column="1" Style="{StaticResource BodyText}" VerticalOptions="Center"
+                               Text="A correct digit in the wrong place." />
+                    </Grid>
 
-            <Label FontSize="15" LineHeight="1.4"
-                   TextColor="{AppThemeBinding Light=#333333, Dark=#EEEEEE}">
-                <Label.FormattedText>
-                    <FormattedString>
-                        <Span Text="Easy: " FontAttributes="Bold" />
-                        <Span Text="Digits can repeat.&#10;" />
-                        <Span Text="Normal: " FontAttributes="Bold" />
-                        <Span Text="All three digits are unique.&#10;" />
-                        <Span Text="Hard: " FontAttributes="Bold" />
-                        <Span Text="All three digits are unique, and you have only 60 seconds!" />
-                    </FormattedString>
-                </Label.FormattedText>
-            </Label>
+                    <!-- Worked example: secret 586, guess 856 -->
+                    <Border Style="{StaticResource HistoryRow}" Padding="12" Margin="0,4,0,0">
+                        <VerticalStackLayout Spacing="8">
+                            <Label Text="EXAMPLE" Style="{StaticResource SectionTitle}" />
+                            <Grid ColumnDefinitions="70,Auto" ColumnSpacing="8" RowDefinitions="Auto,Auto,Auto" RowSpacing="8">
+                                <Label Text="Secret" Style="{StaticResource CaptionText}" VerticalOptions="Center" />
+                                <HorizontalStackLayout Grid.Column="1" Spacing="4">
+                                    <Border Style="{StaticResource DigitTile}"><Label Text="5" Style="{StaticResource DigitTileLabel}" /></Border>
+                                    <Border Style="{StaticResource DigitTile}"><Label Text="8" Style="{StaticResource DigitTileLabel}" /></Border>
+                                    <Border Style="{StaticResource DigitTile}"><Label Text="6" Style="{StaticResource DigitTileLabel}" /></Border>
+                                </HorizontalStackLayout>
 
-            <Button Text="Got it!"
+                                <Label Grid.Row="1" Text="Your guess" Style="{StaticResource CaptionText}" VerticalOptions="Center" />
+                                <HorizontalStackLayout Grid.Row="1" Grid.Column="1" Spacing="4">
+                                    <Border Style="{StaticResource DigitTile}"><Label Text="8" Style="{StaticResource DigitTileLabel}" /></Border>
+                                    <Border Style="{StaticResource DigitTile}"><Label Text="5" Style="{StaticResource DigitTileLabel}" /></Border>
+                                    <Border Style="{StaticResource DigitTile}"><Label Text="6" Style="{StaticResource DigitTileLabel}" /></Border>
+                                </HorizontalStackLayout>
+
+                                <Label Grid.Row="2" Text="Clues" Style="{StaticResource CaptionText}" VerticalOptions="Center" />
+                                <HorizontalStackLayout Grid.Row="2" Grid.Column="1" Spacing="6">
+                                    <Border Style="{StaticResource HitPill}"><Label Text="1 hit" Style="{StaticResource HitPillLabel}" /></Border>
+                                    <Border Style="{StaticResource MatchPill}"><Label Text="2 matches" Style="{StaticResource MatchPillLabel}" /></Border>
+                                </HorizontalStackLayout>
+                            </Grid>
+                            <Label Style="{StaticResource CaptionText}"
+                                   Text="6 is in the right place (1 hit). 8 and 5 are in the code but swapped (2 matches)." />
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Step 3 -->
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="3 · Pick a difficulty" Style="{StaticResource CardTitle}" />
+
+                    <Label Style="{StaticResource BodyText}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Easy: " FontAttributes="Bold" />
+                                <Span Text="every digit of your guess is coloured to show its clue:" />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <HorizontalStackLayout Spacing="14">
+                        <HorizontalStackLayout Spacing="6">
+                            <Border Style="{StaticResource DigitTile}" BackgroundColor="{StaticResource HitGreen}">
+                                <Label Text="6" Style="{StaticResource DigitTileLabel}" TextColor="{StaticResource White}" />
+                            </Border>
+                            <Label Text="hit" Style="{StaticResource CaptionText}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="6">
+                            <Border Style="{StaticResource DigitTile}" BackgroundColor="{StaticResource MatchAmber}">
+                                <Label Text="8" Style="{StaticResource DigitTileLabel}" TextColor="{StaticResource Navy}" />
+                            </Border>
+                            <Label Text="match" Style="{StaticResource CaptionText}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <HorizontalStackLayout Spacing="6">
+                            <Border Style="{StaticResource DigitTile}" BackgroundColor="{StaticResource MissGray}">
+                                <Label Text="2" Style="{StaticResource DigitTileLabel}" TextColor="{StaticResource White}" />
+                            </Border>
+                            <Label Text="not in code" Style="{StaticResource CaptionText}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                    </HorizontalStackLayout>
+
+                    <Label Style="{StaticResource BodyText}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Normal: " FontAttributes="Bold" />
+                                <Span Text="you only see how many hits and matches you got." />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+
+                    <Label Style="{StaticResource BodyText}">
+                        <Label.FormattedText>
+                            <FormattedString>
+                                <Span Text="Hard: " FontAttributes="Bold" />
+                                <Span Text="like Normal, but you have only 60 seconds. The clock turns red in the last 10 seconds." />
+                            </FormattedString>
+                        </Label.FormattedText>
+                    </Label>
+                </VerticalStackLayout>
+            </Border>
+
+            <!-- Tips -->
+            <Border Style="{StaticResource Card}">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="💡 Tips" Style="{StaticResource CardTitle}" />
+                    <Label Style="{StaticResource BodyText}"
+                           Text="• A guess with 0 hits and 0 matches rules out all three of its digits." />
+                    <Label Style="{StaticResource BodyText}"
+                           Text="• 3 hits wins! Your number of guesses and time are saved on the Stats tab." />
+                    <Label Style="{StaticResource BodyText}"
+                           Text="• The clock starts on your first tap and pauses while you are on another screen." />
+                    <Label Style="{StaticResource BodyText}"
+                           Text="• Stuck? Tap Give Up to reveal the code, or New Game to start again." />
+                </VerticalStackLayout>
+            </Border>
+
+            <Button Text="Got it, let's play!"
                     Clicked="OnGotItClicked"
-                    BackgroundColor="#E94560"
-                    TextColor="White"
-                    CornerRadius="8"
-                    Margin="0,20,0,0"
-                    HorizontalOptions="Center" />
+                    Style="{StaticResource PrimaryButton}"
+                    Margin="0,4,0,8" />
         </VerticalStackLayout>
     </ScrollView>
 </ContentPage>

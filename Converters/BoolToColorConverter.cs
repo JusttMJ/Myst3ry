@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Globalization;
 
 namespace Myst3ry.Converters
 {
+    /// <summary>
+    /// Turns a true/false value into one of two colours, e.g. green for a win and red for a loss.
+    /// </summary>
     public class BoolToColorConverter : IValueConverter
     {
         public Color TrueColor { get; set; } = Colors.Green;

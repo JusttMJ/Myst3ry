@@ -4,15 +4,16 @@
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
     xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
     xmlns:views="clr-namespace:Myst3ry.Views"
-    xmlns:local="clr-namespace:Myst3ry"
-    Title="Myst3ry">
+    Title="Myst3ry"
+    Shell.FlyoutBehavior="Disabled">
 
+    <!-- Two tabs at the bottom of the screen. The How to Play page is pushed on top (see AppShell.xaml.cs). -->
     <TabBar>
-        <Tab Title="Play">
-            <ShellContent ContentTemplate="{DataTemplate views:GamePage}" />
+        <Tab Title="Play" Icon="tab_play.png">
+            <ShellContent Route="play" ContentTemplate="{DataTemplate views:GamePage}" />
         </Tab>
-        <Tab Title="Stats">
-            <ShellContent ContentTemplate="{DataTemplate views:StatsPage}" />
+        <Tab Title="Stats" Icon="tab_stats.png">
+            <ShellContent Route="stats" ContentTemplate="{DataTemplate views:StatsPage}" />
         </Tab>
     </TabBar>
 </Shell>
