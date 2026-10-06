@@ -1,0 +1,10 @@
+# Build output (Visual Studio regenerates these on every build)
+bin/
+obj/
+
+# Visual Studio cache and per-user settings folder
+.vs/
+
+# Documentation generator dependencies
+Documentation/tools/node_modules/
+Documentation/tools/package-lock.json

@@ -1,34 +1,35 @@
-﻿using Myst3ry.Models;
-using Myst3ry.Services;
-using System;
 using System.Collections.ObjectModel;
-using System.Diagnostics;
-using System.Linq;
-using System.Windows.Input;
-using Microsoft.Maui.Controls;
+using Myst3ry.Models;
+using Myst3ry.Services;
 
 namespace Myst3ry.ViewModels
 {
+    /// <summary>
+    /// Works out the numbers shown on the Stats screen from the saved games.
+    /// </summary>
     public class StatsViewModel : ViewModelBase
     {
+        private const int RecentGamesShown = 10;
+
         private readonly ScoreService _scoreService;
 
         private int _gamesPlayed;
         private int _gamesWon;
+        private int _gamesLost;
         private string _winRate = "0%";
-        private string _bestScore = "-";
-        private string _avgGuesses = "-";
-        private string _fastestWin = "-";
+        private double _winRateProgress;
+        private string _bestScore = "–";
+        private string _avgGuesses = "–";
+        private string _fastestWin = "–";
+        private string _summary = string.Empty;
+        private bool _hasGames;
 
         public StatsViewModel(ScoreService scoreService)
         {
             _scoreService = scoreService;
-            ClearCommand = new Command(ClearStats);
         }
 
         public ObservableCollection<ScoreEntry> RecentGames { get; } = new();
-
-        public ICommand ClearCommand { get; }
 
         public int GamesPlayed
         {
@@ -42,10 +43,23 @@ namespace Myst3ry.ViewModels
             private set => SetProperty(ref _gamesWon, value);
         }
 
+        public int GamesLost
+        {
+            get => _gamesLost;
+            private set => SetProperty(ref _gamesLost, value);
+        }
+
         public string WinRate
         {
             get => _winRate;
             private set => SetProperty(ref _winRate, value);
+        }
+
+        // 0.0 to 1.0, for the progress bar.
+        public double WinRateProgress
+        {
+            get => _winRateProgress;
+            private set => SetProperty(ref _winRateProgress, value);
         }
 
         public string BestScore
@@ -66,39 +80,60 @@ namespace Myst3ry.ViewModels
             private set => SetProperty(ref _fastestWin, value);
         }
 
+        public string Summary
+        {
+            get => _summary;
+            private set => SetProperty(ref _summary, value);
+        }
+
+        public bool HasGames
+        {
+            get => _hasGames;
+            private set => SetProperty(ref _hasGames, value);
+        }
+
         public void Refresh()
         {
             var scores = _scoreService.GetScores();
-            Debug.WriteLine($"[StatsViewModel] {scores.Count} scores loaded.");
 
             GamesPlayed = scores.Count;
             GamesWon = scores.Count(s => s.Won);
-            WinRate = GamesPlayed == 0 ? "0%" : $"{(100.0 * GamesWon / GamesPlayed):F1}%";
+            GamesLost = GamesPlayed - GamesWon;
+            HasGames = GamesPlayed > 0;
+
+            WinRateProgress = GamesPlayed == 0 ? 0 : (double)GamesWon / GamesPlayed;
+            WinRate = $"{WinRateProgress * 100:F0}%";
 
             var wonGames = scores.Where(s => s.Won).ToList();
             if (wonGames.Count > 0)
             {
-                BestScore = $"{wonGames.Min(s => s.GuessCount)} guesses";
+                BestScore = wonGames.Min(s => s.GuessCount).ToString();
                 AvgGuesses = $"{wonGames.Average(s => s.GuessCount):F1}";
                 int fastest = wonGames.Min(s => s.ElapsedSeconds);
                 FastestWin = TimeSpan.FromSeconds(fastest).ToString(@"mm\:ss");
             }
             else
             {
-                BestScore = "-";
-                AvgGuesses = "-";
-                FastestWin = "-";
+                BestScore = "–";
+                AvgGuesses = "–";
+                FastestWin = "–";
             }
 
+            if (!HasGames)
+                Summary = "Play a game to start tracking your progress.";
+            else if (GamesPlayed >= ScoreService.MaxStoredGames)
+                Summary = $"Based on your last {GamesPlayed} games.";
+            else
+                Summary = $"Based on {GamesPlayed} game{(GamesPlayed != 1 ? "s" : "")} played.";
+
             RecentGames.Clear();
-            foreach (var entry in scores.Take(10))
+            foreach (var entry in scores.Take(RecentGamesShown))
             {
                 RecentGames.Add(entry);
-                Debug.WriteLine($"[StatsViewModel] Added: {entry.Display}");
             }
         }
 
-        private void ClearStats()
+        public void ClearStats()
         {
             _scoreService.ClearAll();
             Refresh();

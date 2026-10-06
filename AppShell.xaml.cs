@@ -1,4 +1,4 @@
-﻿using Myst3ry.Views;
+using Myst3ry.Views;
 
 namespace Myst3ry
 {
@@ -8,6 +8,7 @@ namespace Myst3ry
         {
             InitializeComponent();
 
+            // Lets pages open the help screen with Shell.Current.GoToAsync(nameof(HelpPage)).
             Routing.RegisterRoute(nameof(HelpPage), typeof(HelpPage));
         }
     }

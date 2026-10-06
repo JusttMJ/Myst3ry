@@ -1,28 +1,34 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-
 namespace Myst3ry.Models
 {
+    /// <summary>
+    /// The game rules: creates the secret code and scores each guess.
+    /// It contains no user-interface code.
+    /// </summary>
     public class GameModel
     {
+        public const int CodeLength = 3;
+
         private string _secretCode = string.Empty;
         private readonly Random _random = new Random();
 
         public string SecretCode => _secretCode;
 
-        public void GenerateNewCode(Difficulty difficulty)
+        /// <summary>
+        /// Picks a random three-digit number (102 to 987) in which every digit is different.
+        /// </summary>
+        public void GenerateNewCode()
         {
-            bool allowRepeats = difficulty == Difficulty.Easy;
+            // The first digit can't be 0, otherwise it would not be a three-digit number.
+            var digits = new List<int> { _random.Next(1, 10) };
 
-            do
+            while (digits.Count < CodeLength)
             {
-                int a = _random.Next(0, 10);
-                int b = _random.Next(0, 10);
-                int c = _random.Next(0, 10);
-                _secretCode = $"{a}{b}{c}";
+                int digit = _random.Next(0, 10);
+                if (!digits.Contains(digit))
+                    digits.Add(digit);
             }
-            while (!allowRepeats && HasDuplicateDigits(_secretCode));
+
+            _secretCode = string.Concat(digits);
         }
 
         public void SetSecretCode(string code)
@@ -30,46 +36,61 @@ namespace Myst3ry.Models
             _secretCode = code ?? string.Empty;
         }
 
-        private bool HasDuplicateDigits(string code)
-        {
-            return code[0] == code[1] ||
-                   code[1] == code[2] ||
-                   code[0] == code[2];
-        }
-
-        public GuessResult EvaluateGuess(string guess)
+        /// <summary>
+        /// Compares a guess with the secret code.
+        /// A hit is a correct digit in the correct place; a match is a correct digit in the wrong place.
+        /// </summary>
+        /// <param name="revealDigitStates">True (Easy mode) to also say which digit is a hit, match or miss.</param>
+        public GuessResult EvaluateGuess(string guess, bool revealDigitStates)
         {
             int hits = 0, matches = 0;
+            var states = new DigitState[CodeLength];
             var secretUnmatched = new List<char>();
-            var guessUnmatched = new List<char>();
 
-            for (int i = 0; i < 3; i++)
+            // First pass: hits (right digit, right place).
+            for (int i = 0; i < CodeLength; i++)
             {
                 if (guess[i] == _secretCode[i])
                 {
                     hits++;
+                    states[i] = DigitState.Hit;
                 }
                 else
                 {
                     secretUnmatched.Add(_secretCode[i]);
-                    guessUnmatched.Add(guess[i]);
                 }
             }
 
-            foreach (char c in guessUnmatched)
+            // Second pass: matches (right digit, wrong place). Each secret digit is only counted once.
+            for (int i = 0; i < CodeLength; i++)
             {
-                if (secretUnmatched.Contains(c))
+                if (states[i] == DigitState.Hit)
+                    continue;
+
+                if (secretUnmatched.Remove(guess[i]))
                 {
                     matches++;
-                    secretUnmatched.Remove(c); 
+                    states[i] = DigitState.Match;
                 }
+                else
+                {
+                    states[i] = DigitState.Miss;
+                }
+            }
+
+            var digits = new List<DigitFeedback>();
+            for (int i = 0; i < CodeLength; i++)
+            {
+                digits.Add(new DigitFeedback(guess[i].ToString(),
+                                             revealDigitStates ? states[i] : DigitState.Neutral));
             }
 
             return new GuessResult
             {
                 Guess = guess,
                 Hits = hits,
-                Matches = matches
+                Matches = matches,
+                Digits = digits
             };
         }
     }

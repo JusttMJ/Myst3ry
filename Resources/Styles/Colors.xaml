@@ -1,4 +1,4 @@
-﻿<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8" ?>
 <?xaml-comp compile="true" ?>
 <ResourceDictionary 
     xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
@@ -6,17 +6,42 @@
 
     <!-- Note: For Android please see also Platforms\Android\Resources\values\colors.xml -->
 
-    <Color x:Key="Primary">#512BD4</Color>
-    <Color x:Key="PrimaryDark">#ac99ea</Color>
-    <Color x:Key="PrimaryDarkText">#242424</Color>
-    <Color x:Key="Secondary">#DFD8F7</Color>
-    <Color x:Key="SecondaryDarkText">#9880e5</Color>
-    <Color x:Key="Tertiary">#2B0B98</Color>
+    <Color x:Key="Primary">#E94560</Color>
+    <Color x:Key="PrimaryDark">#E94560</Color>
+    <Color x:Key="PrimaryDarkText">#FFFFFF</Color>
+    <Color x:Key="Secondary">#FDE3E8</Color>
+    <Color x:Key="SecondaryDarkText">#F47C92</Color>
+    <Color x:Key="Tertiary">#16213E</Color>
+
+    <!-- Myst3ry brand palette -->
+    <Color x:Key="Navy">#16213E</Color>
+    <Color x:Key="DeepBlue">#0F3460</Color>
+    <Color x:Key="Midnight">#1A1A2E</Color>
+    <Color x:Key="Accent">#E94560</Color>
+    <Color x:Key="AccentPressed">#C9344E</Color>
+
+    <!-- Clue colours: hit = right digit, right place; match = right digit, wrong place -->
+    <Color x:Key="HitGreen">#23944D</Color>
+    <Color x:Key="MatchAmber">#F2A93B</Color>
+    <Color x:Key="MissGray">#6B7089</Color>
+
+    <!-- Surfaces and text for light and dark theme -->
+    <Color x:Key="LightBackground">#F4F5FA</Color>
+    <Color x:Key="LightSurface">#FFFFFF</Color>
+    <Color x:Key="DarkSurface">#16213E</Color>
+    <Color x:Key="LightStroke">#E1E4EE</Color>
+    <Color x:Key="DarkStroke">#2A3A64</Color>
+    <Color x:Key="LightText">#1F2440</Color>
+    <Color x:Key="DarkText">#EEF0F7</Color>
+    <Color x:Key="LightSubtleText">#5D6480</Color>
+    <Color x:Key="DarkSubtleText">#A6ADC8</Color>
+    <Color x:Key="LightTile">#E6E9F2</Color>
+    <Color x:Key="DarkTile">#0F3460</Color>
 
     <Color x:Key="White">White</Color>
     <Color x:Key="Black">Black</Color>
-    <Color x:Key="Magenta">#D600AA</Color>
-    <Color x:Key="MidnightBlue">#190649</Color>
+    <Color x:Key="Magenta">#E94560</Color>
+    <Color x:Key="MidnightBlue">#16213E</Color>
     <Color x:Key="OffBlack">#1f1f1f</Color>
 
     <Color x:Key="Gray100">#E1E1E1</Color>
