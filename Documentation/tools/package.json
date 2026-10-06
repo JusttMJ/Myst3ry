@@ -1,0 +1,11 @@
+{
+  "name": "myst3ry-documentation",
+  "private": true,
+  "description": "Generates Myst3ry_Project_Documentation.docx (tutorial, usability, course topics, self-taught aspects and code listings).",
+  "scripts": {
+    "build": "node build_documentation.js"
+  },
+  "dependencies": {
+    "docx": "^9.7.1"
+  }
+}

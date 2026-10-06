@@ -5,5 +5,6 @@ obj/
 # Visual Studio cache and per-user settings folder
 .vs/
 
-# Documentation build tooling cache
-Documentation/tools/__pycache__/
+# Documentation generator dependencies
+Documentation/tools/node_modules/
+Documentation/tools/package-lock.json
