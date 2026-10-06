@@ -1,0 +1,9 @@
+# Build output (Visual Studio regenerates these on every build)
+bin/
+obj/
+
+# Visual Studio cache and per-user settings folder
+.vs/
+
+# Documentation build tooling cache
+Documentation/tools/__pycache__/
