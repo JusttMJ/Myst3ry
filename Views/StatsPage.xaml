@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:models="clr-namespace:Myst3ry.Models"
+             xmlns:vm="clr-namespace:Myst3ry.ViewModels"
+             x:Class="Myst3ry.Views.StatsPage"
+             x:DataType="vm:StatsViewModel"
+             Title="Statistics"
+             BackgroundColor="{AppThemeBinding Light=#F5F5F5, Dark=#1A1A2E}">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label Text="📊 Your Statistics"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=#16213E, Dark=#E94560}" />
+
+            <Border Stroke="{AppThemeBinding Light=#DDDDDD, Dark=#0F3460}"
+                    StrokeThickness="1"
+                    Padding="15">
+                <Grid RowDefinitions="Auto,Auto,Auto,Auto,Auto,Auto" RowSpacing="10">
+                    <Grid Grid.Row="0" ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="Games Played" FontSize="16" />
+                        <Label Grid.Column="1" Text="{Binding GamesPlayed}" FontSize="16" FontAttributes="Bold" />
+                    </Grid>
+                    <Grid Grid.Row="1" ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="Games Won" FontSize="16" />
+                        <Label Grid.Column="1" Text="{Binding GamesWon}" FontSize="16" FontAttributes="Bold" TextColor="#4CAF50" />
+                    </Grid>
+                    <Grid Grid.Row="2" ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="Win Rate" FontSize="16" />
+                        <Label Grid.Column="1" Text="{Binding WinRate}" FontSize="16" FontAttributes="Bold" />
+                    </Grid>
+                    <Grid Grid.Row="3" ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="Best Score" FontSize="16" />
+                        <Label Grid.Column="1" Text="{Binding BestScore}" FontSize="16" FontAttributes="Bold" />
+                    </Grid>
+                    <Grid Grid.Row="4" ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="Average Guesses" FontSize="16" />
+                        <Label Grid.Column="1" Text="{Binding AvgGuesses}" FontSize="16" FontAttributes="Bold" />
+                    </Grid>
+                    <Grid Grid.Row="5" ColumnDefinitions="*,Auto">
+                        <Label Grid.Column="0" Text="Fastest Win" FontSize="16" />
+                        <Label Grid.Column="1" Text="{Binding FastestWin}" FontSize="16" FontAttributes="Bold" />
+                    </Grid>
+                </Grid>
+            </Border>
+
+            <Label Text="Recent Games"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=#16213E, Dark=#E94560}"
+                   Margin="0,10,0,0" />
+
+            <CollectionView ItemsSource="{Binding RecentGames}"
+                            SelectionMode="None">
+                <CollectionView.ItemTemplate>
+                    <DataTemplate x:DataType="models:ScoreEntry">
+                        <Border StrokeThickness="1"
+                                Stroke="{AppThemeBinding Light=#DDDDDD, Dark=#0F3460}"
+                                Padding="10"
+                                Margin="0,0,0,6">
+                            <Label Text="{Binding Display}"
+                                   FontSize="15"
+                                   TextColor="{AppThemeBinding Light=#333333, Dark=#EEEEEE}" />
+                        </Border>
+                    </DataTemplate>
+                </CollectionView.ItemTemplate>
+
+                <CollectionView.EmptyView>
+                    <Label Text="No games played yet."
+                           TextColor="Gray"
+                           HorizontalOptions="Center"
+                           Padding="20" />
+                </CollectionView.EmptyView>
+            </CollectionView>
+
+            <Button Text="Clear History"
+                    Command="{Binding ClearCommand}"
+                    BackgroundColor="#E94560"
+                    TextColor="White"
+                    CornerRadius="8"
+                    Margin="0,15,0,0" />
+
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>

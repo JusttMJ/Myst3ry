@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             x:Class="Myst3ry.Views.HelpPage"
+             Title="How to Play">
+
+    <ScrollView>
+        <VerticalStackLayout Padding="20" Spacing="15">
+
+            <Label Text="🎯 How to Play"
+                   FontSize="24"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=#16213E, Dark=#E94560}" />
+
+            <Label FontSize="15" LineHeight="1.4"
+                   TextColor="{AppThemeBinding Light=#333333, Dark=#EEEEEE}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="The computer has secretly selected a random 3-digit code. Your job is to crack the myst3ry by making guesses." />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Label Text="How Feedback Works"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=#16213E, Dark=#E94560}"
+                   Margin="0,10,0,0" />
+
+            <Label FontSize="15" LineHeight="1.4"
+                   TextColor="{AppThemeBinding Light=#333333, Dark=#EEEEEE}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="✅ Hits: " FontAttributes="Bold" />
+                        <Span Text="Number of digits in the correct position." />
+                        <Span Text="&#10;&#10;" />
+                        <Span Text="🔄 Matches: " FontAttributes="Bold" />
+                        <Span Text="Number of correct digits in the wrong position." />
+                        <Span Text="&#10;&#10;" />
+                        <Span Text="Example: " FontAttributes="Bold" />
+                        <Span Text="If the myst3ry code is 5-8-6 and you guess 8-5-6, you get 1 hit and 2 matches." />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Label Text="Difficulty Modes"
+                   FontSize="18"
+                   FontAttributes="Bold"
+                   TextColor="{AppThemeBinding Light=#16213E, Dark=#E94560}"
+                   Margin="0,10,0,0" />
+
+            <Label FontSize="15" LineHeight="1.4"
+                   TextColor="{AppThemeBinding Light=#333333, Dark=#EEEEEE}">
+                <Label.FormattedText>
+                    <FormattedString>
+                        <Span Text="Easy: " FontAttributes="Bold" />
+                        <Span Text="Digits can repeat.&#10;" />
+                        <Span Text="Normal: " FontAttributes="Bold" />
+                        <Span Text="All three digits are unique.&#10;" />
+                        <Span Text="Hard: " FontAttributes="Bold" />
+                        <Span Text="All three digits are unique, and you have only 60 seconds!" />
+                    </FormattedString>
+                </Label.FormattedText>
+            </Label>
+
+            <Button Text="Got it!"
+                    Clicked="OnGotItClicked"
+                    BackgroundColor="#E94560"
+                    TextColor="White"
+                    CornerRadius="8"
+                    Margin="0,20,0,0"
+                    HorizontalOptions="Center" />
+        </VerticalStackLayout>
+    </ScrollView>
+</ContentPage>
